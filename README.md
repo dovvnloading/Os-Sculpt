@@ -107,6 +107,3 @@ The core interaction layer is built upon a custom deformation engine that manipu
 
 *   **Export:** Click the **EXP** button in the top toolbar to generate and download a `.obj` file of the current mesh.
 
-## Credits
-
-**Developer:** Matthew Robert Wesney
