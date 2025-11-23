@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Os-s | Open Source Sculpt</title>
+    <style>
+        /* 
+         * COLOR PALETTE 
+         * #1D1D1D - Main Background
+         * #9F9FA3 - Body Text / Muted
+         * #635A59 - Borders / Separators
+         * #7F7B81 - Secondary Text / Subtitles
+         * #333130 - Cards / Panels
+         * #0B0B0B - Navbar / Footer / Deep Background
+         * #BA4818 - Primary Accent (Orange)
+         * #BEBEC1 - Headings / High Contrast
+         */
+
+        :root {
+            --bg-main: #1D1D1D;
+            --bg-deep: #0B0B0B;
+            --bg-card: #333130;
+            
+            --text-head: #BEBEC1;
+            --text-body: #9F9FA3;
+            --text-sub: #7F7B81;
+            
+            --border: #635A59;
+            --accent: #BA4818;
+            --accent-hover: #d65620;
+            
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-body);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--text-head);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        /* UTILITIES */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--text-head);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(186, 72, 24, 0.3);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--border);
+            color: var(--text-head);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-head);
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        /* HEADER */
+        header {
+            background-color: var(--bg-deep);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-head);
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links a {
+            color: var(--text-sub);
+            margin-left: 2rem;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-head);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--text-head), var(--text-sub));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            color: var(--text-body);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero-image-container {
+            background-color: var(--bg-card);
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .hero-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+
+        /* FEATURES GRID */
+        .section {
+            padding: 5rem 0;
+            border-bottom: 1px solid rgba(99, 90, 89, 0.2);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--border);
+        }
+
+        .card h3 {
+            color: var(--accent);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: var(--text-body);
+        }
+
+        /* TECH STACK */
+        .tech-stack {
+            background-color: var(--bg-deep);
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .tech-item {
+            background-color: var(--bg-card);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            color: var(--text-head);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* CONTROLS */
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .control-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .control-table th, .control-table td {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .control-table th {
+            color: var(--text-sub);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .control-table td {
+            color: var(--text-head);
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--bg-deep);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        footer p {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+        }
+
+        footer .credits {
+            margin-top: 0.5rem;
+            color: var(--text-body);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .controls-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* Simple mobile hide for demo */
+        }
+    </style>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">Os-<span>s</span></a>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#tech">Architecture</a>
+                    <a href="#controls">Guide</a>
+                    <a href="https://github.com/dovvnloading/Os-Sculpt" target="_blank">GitHub</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Professional 3D Sculpting<br>in the Browser</h1>
+            <p>High-performance mesh deformation built on React and Three.js. <br>No downloads, no installation. Just create.</p>
+            
+            <div class="hero-buttons">
+                <a href="http://localhost:5173" class="btn btn-primary">Launch App</a>
+                <a href="https://github.com/dovvnloading/Os-Sculpt" class="btn btn-outline">View Source</a>
+            </div>
+
+            <div class="hero-image-container">
+                <img src="https://github.com/user-attachments/assets/48675bf9-9dee-43dd-93c9-651af5c82d82" alt="Os-s Interface Screenshot">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Core Features</h2>
+                <p>Direct buffer manipulation for real-time organic modeling.</p>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Standard Brush</h3>
+                    <p>Displaces geometry along vertex normals to add volume and form instantly. The fundamental tool for blocking out shapes.</p>
+                </div>
+                <div class="card">
+                    <h3>Smooth & Flatten</h3>
+                    <p>Apply Laplacian smoothing to relax topology or calculate average planes to create hard-surface planer effects.</p>
+                </div>
+                <div class="card">
+                    <h3>Vertex Painting</h3>
+                    <p>Cubic-falloff airbrush system. Apply vertex colors with smooth gradients and opacity layering directly onto the mesh.</p>
+                </div>
+                <div class="card">
+                    <h3>History Stack</h3>
+                    <p>Comprehensive Undo/Redo system capturing geometry and color buffers ensures data integrity during your workflow.</p>
+                </div>
+                <div class="card">
+                    <h3>OBJ Export</h3>
+                    <p>Native generation of Wavefront .obj files for seamless interoperability with Blender, Maya, and ZBrush.</p>
+                </div>
+                <div class="card">
+                    <h3>PBR Materials</h3>
+                    <p>Real-time switching between Standard, Clay (Rough), and Metallic (Specular) materials to inspect surface details.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section id="tech" class="section tech-stack">
+        <div class="container">
+            <div class="section-title">
+                <h2>Technical Architecture</h2>
+                <p>Built for performance using modern web technologies.</p>
+            </div>
+            <div class="tech-list">
+                <div class="tech-item">React 19</div>
+                <div class="tech-item">TypeScript</div>
+                <div class="tech-item">Three.js</div>
+                <div class="tech-item">React Three Fiber</div>
+                <div class="tech-item">Vite</div>
+                <div class="tech-item">Direct Buffer Access</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Controls / Usage -->
+    <section id="controls" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Usage Guide</h2>
+            </div>
+            <div class="controls-grid">
+                <div>
+                    <h3>Navigation</h3>
+                    <table class="control-table">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Input</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Rotate Camera</td>
+                                <td>Left Click + Drag (Background)</td>
+                            </tr>
+                            <tr>
+                                <td>Pan Camera</td>
+                                <td>Right Click + Drag</td>
+                            </tr>
+                            <tr>
+                                <td>Zoom</td>
+                                <td>Scroll Wheel</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h3>Sculpting</h3>
+                    <table class="control-table">
+                        <thead>
+                            <tr>
+                                <th>Step</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Select Tool</td>
+                                <td>Sidebar (Standard, Smooth, Pinch)</td>
+                            </tr>
+                            <tr>
+                                <td>Adjust Settings</td>
+                                <td>Properties Panel (Radius/Intensity)</td>
+                            </tr>
+                            <tr>
+                                <td>Deform</td>
+                                <td>Left Click + Drag (On Mesh)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <a href="#" class="logo">Os-<span>s</span></a>
+            <p class="credits">Developed by Matthew Robert Wesney</p>
+            <br>
+            <p>&copy; 2024 Os-s Project. Open Source.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
